@@ -1,35 +1,75 @@
-=== SET OPERATIONS ===
-Choose an option: 1
-Enter element to add: apple
-apple added to set.
+import java.util.HashSet;
+import java.util.Scanner;
 
-Choose an option: 1
-Enter element to add: banana
-banana added to set.
+public class Main {
+    public static void main(String[] args) {
+        HashSet<String> set = new HashSet<>();
+        Scanner sc = new Scanner(System.in);
+        boolean run = true;
 
-Choose an option: 1
-Enter element to add: apple
-apple already exists!
+        while (run) {
+            System.out.println("\n=== SET OPERATIONS ===");
+            System.out.println("1. Add Element");
+            System.out.println("2. Remove Element");
+            System.out.println("3. Check if Element Exists");
+            System.out.println("4. Display All Elements");
+            System.out.println("5. Size of Set");
+            System.out.println("6. Clear Set");
+            System.out.println("7. Exit");
+            System.out.print("Choose an option: ");
+            int choice = sc.nextInt();
+            sc.nextLine(); // consume newline
 
-Choose an option: 4
-Set elements: [banana, apple]
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter element to add: ");
+                    String element = sc.nextLine();
+                    if (set.add(element))
+                        System.out.println(element + " added to set.");
+                    else
+                        System.out.println(element + " already exists!");
+                    break;
 
-Choose an option: 3
-Enter element to check: banana
-banana exists in set.
+                case 2:
+                    System.out.print("Enter element to remove: ");
+                    element = sc.nextLine();
+                    if (set.remove(element))
+                        System.out.println(element + " removed from set.");
+                    else
+                        System.out.println(element + " not found!");
+                    break;
 
-Choose an option: 2
-Enter element to remove: apple
-apple removed from set.
+                case 3:
+                    System.out.print("Enter element to check: ");
+                    element = sc.nextLine();
+                    if (set.contains(element))
+                        System.out.println(element + " exists in set.");
+                    else
+                        System.out.println(element + " does not exist.");
+                    break;
 
-Choose an option: 4
-Set elements: [banana]
+                case 4:
+                    System.out.println("Set elements: " + set);
+                    break;
 
-Choose an option: 5
-Set size: 1
+                case 5:
+                    System.out.println("Set size: " + set.size());
+                    break;
 
-Choose an option: 6
-Set cleared.
+                case 6:
+                    set.clear();
+                    System.out.println("Set cleared.");
+                    break;
 
-Choose an option: 4
-Set elements: []
+                case 7:
+                    run = false;
+                    break;
+
+                default:
+                    System.out.println("Invalid choice!");
+            }
+        }
+
+        sc.close();
+    }
+}
