@@ -1,0 +1,35 @@
+=== SET OPERATIONS ===
+Choose an option: 1
+Enter element to add: apple
+apple added to set.
+
+Choose an option: 1
+Enter element to add: banana
+banana added to set.
+
+Choose an option: 1
+Enter element to add: apple
+apple already exists!
+
+Choose an option: 4
+Set elements: [banana, apple]
+
+Choose an option: 3
+Enter element to check: banana
+banana exists in set.
+
+Choose an option: 2
+Enter element to remove: apple
+apple removed from set.
+
+Choose an option: 4
+Set elements: [banana]
+
+Choose an option: 5
+Set size: 1
+
+Choose an option: 6
+Set cleared.
+
+Choose an option: 4
+Set elements: []
