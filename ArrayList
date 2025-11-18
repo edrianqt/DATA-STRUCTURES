@@ -1,0 +1,238 @@
+import java.util.*;
+
+class MyArray {
+    private int[] arr;
+    private int count;
+    private int size;
+    private Scanner scan = new Scanner(System.in);
+
+    public MyArray(int size) {
+        this.size = size;
+        arr = new int[size];
+    }
+
+    public void startMenu() {
+        int option;
+        do {
+            printMenu();
+            option = getUserOption();
+            performAction(option);
+        } while (option != MenuOptions.Exit);
+    }
+
+    public void printMenu() {      
+
+        System.out.println("1. Add element");     
+        System.out.println("2. View array");     
+        System.out.println("3. Remove element");
+        System.out.println("4. Search element"); 
+        System.out.println("5. Sort array");     
+        System.out.println("6. Edit element");   
+        System.out.println("7. Count elements");
+        System.out.println("8. Exit");          
+   
+    }
+
+    public int getUserOption() {
+        int option = -1;
+        while (option < MenuOptions.Min_Option || option > MenuOptions.Max_Option) {
+            System.out.print("Option: ");
+            if (scan.hasNextInt()) {
+                option = scan.nextInt();
+            } else {
+                System.out.println("Invalid input. Please enter a number.");
+                scan.nextLine(); 
+            }
+        }
+        return option;
+    }
+
+    public void performAction(int option) {
+        try {
+            switch (option) {
+                case MenuOptions.Add:
+                    add();
+                    break;
+                case MenuOptions.View:
+                    view();
+                    break;
+                case MenuOptions.Remove:
+                    remove();
+                    break;
+                case MenuOptions.Search:
+                    search();
+                    break;
+                case MenuOptions.Sort:
+                    sort();
+                    break;
+                case MenuOptions.Edit:
+                    edit();
+                    break;
+                case MenuOptions.Count:
+                    count();
+                    break;
+                case MenuOptions.Exit:
+                    System.out.println("Goodbye!");
+                    break;
+                default:
+                    System.out.println("Invalid option! Please select a valid option.");
+                    break;
+            }
+        } catch (MyArrayException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public void add() throws MyArrayException {
+        if (count < size) {
+            do {
+                System.out.print("Enter the element: ");
+                int input = scan.nextInt();
+                arr[count] = input;
+                count++;
+                System.out.println("Element added successfully.");
+
+                if (count < size) {
+                    System.out.print("Do you want to add another element? (1: Yes, 2: No): ");
+                    int addOption = scan.nextInt();
+                    if (addOption != 1) {
+                        break;
+                    }
+                } else {
+                    throw new MyArrayException("Array is full!");
+                }
+            } while (true);
+        } else {
+            throw new MyArrayException("Array is full!");
+        }
+    }
+
+    public void view() throws MyArrayException {
+        if (count > 0) {
+            System.out.println("Array elements: " + Arrays.toString(Arrays.copyOf(arr, count)));
+        } else {
+            throw new MyArrayException("Array is empty!");
+        }
+    }
+
+    public void remove() throws MyArrayException {
+        if (count > 0) {
+            System.out.print("Enter the index to remove element (0 to " + (count - 1) + "): ");
+            int indexRemove = scan.nextInt();
+            if (indexRemove >= 0 && indexRemove < count) {
+                for (int i = indexRemove; i < count - 1; i++) {
+                    arr[i] = arr[i + 1];
+                }
+                count--;
+                System.out.println("Element removed successfully.");
+            } else {
+                throw new MyArrayException("Invalid index.");
+            }
+        } else {
+            throw new MyArrayException("Array is empty.");
+        }
+    }
+
+    public void search() throws MyArrayException {
+        if (count > 0) {
+            System.out.print("Enter an element to search: ");
+            int elementSearch = scan.nextInt();
+
+            int foundIndex = -1;
+            for (int i = 0; i < count; i++) {
+                if (arr[i] == elementSearch) {
+                    foundIndex = i;
+                    break;
+                }
+            }
+
+            if (foundIndex != -1) {
+                System.out.println("The element is located at index " + foundIndex);
+            } else {
+                System.out.println("Element not found.");
+            }
+        } else {
+            throw new MyArrayException("Array is empty.");
+        }
+    }
+
+    public void sort() throws MyArrayException {
+        if (count > 0) {
+            System.out.println("Choose sorting order");
+            System.out.println("1. Ascending");
+            System.out.println("2. Descending");
+            System.out.print("Option: ");
+
+            int sortOption = scan.nextInt();
+            switch (sortOption) {
+                case 1:
+                    Arrays.sort(arr, 0, count);
+                    System.out.println("Array sorted in ascending order.");
+                    break;
+                case 2:
+                    Arrays.sort(arr, 0, count);
+                    for (int i = 0; i < count / 2; i++) {
+                        int temp = arr[i];
+                        arr[i] = arr[count - i - 1];
+                        arr[count - i - 1] = temp;
+                    }
+                    System.out.println("Array sorted in descending order.");
+                    break;
+                default:
+                    throw new MyArrayException("Invalid option.");
+            }
+        } else {
+            throw new MyArrayException("Array is empty.");
+        }
+    }
+
+    public void edit() throws MyArrayException {
+        if (count > 0) {
+            System.out.print("Enter the index to edit element (0 to " + (count - 1) + "): ");
+            int indexEdit = scan.nextInt();
+            if (indexEdit >= 0 && indexEdit < count) {
+                System.out.print("Enter new element: ");
+                int newElement = scan.nextInt();
+                arr[indexEdit] = newElement;
+                System.out.println("Element edited successfully.");
+            } else {
+                throw new MyArrayException("Invalid Index.");
+            }
+        } else {
+            throw new MyArrayException("Array is empty.");
+        }
+    }
+
+    public void count() {
+        System.out.println("The count is: " + count);
+    }
+}
+
+public class FinalMyArray {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in); 
+        System.out.print("Create the desired array size: "); 
+        int size = sc.nextInt();
+        MyArray myArray = new MyArray(size);
+        myArray.startMenu();
+    }
+}
+
+class MenuOptions {
+    static final int Add = 1;
+    static final int View = 2;
+    static final int Remove = 3;
+    static final int Search = 4;
+    static final int Sort = 5;
+    static final int Edit = 6;
+    static final int Count = 7;
+    static final int Exit = 8;
+    static final int Min_Option = 1;
+    static final int Max_Option = 8;
+}
+
+class MyArrayException extends Exception {
+    public MyArrayException(String message) {
+        super(message);
+    }
+}
