@@ -1,0 +1,24 @@
+=== HASHMAP OPERATIONS ===
+Choose an option: 1
+Enter key: apple
+Enter value: 10
+Added/Updated: apple -> 10
+
+Choose an option: 1
+Enter key: banana
+Enter value: 20
+Added/Updated: banana -> 20
+
+Choose an option: 5
+HashMap: {apple=10, banana=20}
+
+Choose an option: 2
+Enter key: apple
+Value: 10
+
+Choose an option: 3
+Enter key to remove: apple
+Removed key: apple
+
+Choose an option: 5
+HashMap: {banana=20}
