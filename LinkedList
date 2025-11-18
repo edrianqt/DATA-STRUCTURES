@@ -1,0 +1,153 @@
+import java.util.Scanner;
+
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class LinkedList {
+    Node head;
+
+    // Insert at the beginning
+    void insertAtBeginning(int data) {
+        Node newNode = new Node(data);
+        newNode.next = head;
+        head = newNode;
+    }
+
+    // Insert at the end
+    void insertAtEnd(int data) {
+        Node newNode = new Node(data);
+
+        if (head == null) {
+            head = newNode;
+            return;
+        }
+
+        Node current = head;
+        while (current.next != null) {
+            current = current.next;
+        }
+
+        current.next = newNode;
+    }
+
+    // Delete by value
+    void delete(int data) {
+        if (head == null) {
+            System.out.println("List is empty.");
+            return;
+        }
+
+        if (head.data == data) {
+            head = head.next;
+            System.out.println("Deleted: " + data);
+            return;
+        }
+
+        Node current = head;
+        while (current.next != null && current.next.data != data) {
+            current = current.next;
+        }
+
+        if (current.next == null) {
+            System.out.println("Value not found.");
+        } else {
+            current.next = current.next.next;
+            System.out.println("Deleted: " + data);
+        }
+    }
+
+    // Search
+    boolean search(int data) {
+        Node current = head;
+
+        while (current != null) {
+            if (current.data == data)
+                return true;
+
+            current = current.next;
+        }
+        return false;
+    }
+
+    // Display the list
+    void display() {
+        if (head == null) {
+            System.out.println("List is empty.");
+            return;
+        }
+
+        Node current = head;
+        System.out.print("Linked List: ");
+        while (current != null) {
+            System.out.print(current.data + " -> ");
+            current = current.next;
+        }
+        System.out.println("null");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        LinkedList list = new LinkedList();
+
+        boolean run = true;
+
+        while (run) {
+            System.out.println("LINKED LIST OPERATIONS");
+            System.out.println("1. Insert at Beginning");
+            System.out.println("2. Insert at End");
+            System.out.println("3. Delete a Value");
+            System.out.println("4. Search a Value");
+            System.out.println("5. Display List");
+            System.out.println("6. Exit");
+            System.out.print("Choose an option: ");
+            int choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter number: ");
+                    list.insertAtBeginning(sc.nextInt());
+                    break;
+
+                case 2:
+                    System.out.print("Enter number: ");
+                    list.insertAtEnd(sc.nextInt());
+                    break;
+
+                case 3:
+                    System.out.print("Enter value to delete: ");
+                    list.delete(sc.nextInt());
+                    break;
+
+                case 4:
+                    System.out.print("Enter value to search: ");
+                    if (list.search(sc.nextInt()))
+                        System.out.println("Value found.");
+                    else
+                        System.out.println("Value not found.");
+                    break;
+
+                case 5:
+                    list.display();
+                    break;
+
+                case 6:
+                    run = false;
+                    break;
+
+                default:
+                    System.out.println("Invalid choice!");
+            }
+        }
+
+        sc.close();
+    }
+}
