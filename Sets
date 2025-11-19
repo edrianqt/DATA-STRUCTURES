@@ -8,7 +8,7 @@ public class Main {
         boolean run = true;
 
         while (run) {
-            System.out.println("\SET OPERATIONS");
+            System.out.println("SET OPERATIONS");
             System.out.println("1. Add Element");
             System.out.println("2. Remove Element");
             System.out.println("3. Check if Element Exists");
